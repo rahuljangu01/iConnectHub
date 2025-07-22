@@ -1,0 +1,265 @@
+/* --- ROOT VARIABLES & KEYFRAMES --- */
+:root {
+  --space-dark: #0f172a;
+  --aurora-pink: #ec4899;
+  --aurora-purple: #a855f7;
+  --aurora-blue: #3b82f6;
+  --aurora-cyan: #22d3ee;
+  --text-bright: #f1f5f9;
+  --text-dim: #94a3b8;
+}
+
+@keyframes aurora-pan {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes text-shimmer {
+  from { background-position: 200% center; }
+  to { background-position: -200% center; }
+}
+
+@keyframes sparkle-float {
+  0% { transform: translateY(0) scale(1); opacity: 0; }
+  25% { opacity: 1; }
+  50% { transform: translateY(-15px) scale(0.8); }
+  75% { opacity: 1; }
+  100% { transform: translateY(-30px) scale(0.5); opacity: 0; }
+}
+
+@keyframes draw-border {
+  from { stroke-dashoffset: 1000; }
+  to { stroke-dashoffset: 0; }
+}
+
+
+/* --- Navbar Container --- */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background: linear-gradient(110deg, #1e293b, var(--space-dark), #1e293b);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Aurora background effect */
+.navbar-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 300%;
+  background: linear-gradient(60deg, var(--aurora-purple), var(--aurora-pink), var(--aurora-cyan), var(--aurora-purple));
+  background-size: 400% 400%;
+  filter: blur(50px);
+  opacity: 0.4;
+  animation: aurora-pan 20s ease infinite;
+  z-index: 1;
+}
+
+
+/* --- Logo --- */
+.logo-wrapper { z-index: 2; }
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+.logo-text {
+  font-size: 24px;
+  font-weight: 800;
+  color: transparent;
+  background: linear-gradient(90deg, var(--text-bright), #d1d5db, var(--text-bright));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: text-shimmer 5s linear infinite;
+}
+.navbar-logo-icon {
+  width: 30px;
+  height: 30px;
+  color: var(--aurora-cyan);
+  filter: drop-shadow(0 0 5px var(--aurora-cyan));
+}
+.logo-sparkle {
+  position: absolute;
+  color: var(--aurora-pink);
+  animation: sparkle-float 3s ease-out infinite;
+}
+.logo-sparkle:nth-child(2) { animation-delay: 0.5s; color: var(--aurora-purple); }
+.logo-sparkle:nth-child(3) { animation-delay: 1s; color: var(--aurora-cyan); }
+
+
+/* --- Desktop Menu --- */
+.navbar-menu.desktop {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 2;
+}
+
+/* --- Navigation Links --- */
+.navbar-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: var(--text-dim);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 999px;
+  transition: color 0.3s ease;
+}
+.navbar-link:hover {
+  color: var(--text-bright);
+}
+.navbar-link::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--aurora-purple), var(--aurora-pink));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+.navbar-link:hover::before, .navbar-link.active::before {
+  opacity: 0.15;
+}
+.navbar-link.active {
+  color: var(--text-bright);
+}
+.hover-underline {
+  /* We use the ::before element for hover, so this can be hidden or removed */
+  display: none;
+}
+
+
+/* --- User Info --- */
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(30, 41, 59, 0.5);
+  padding: 6px 12px 6px 6px;
+  border-radius: 9999px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  transition: background-color 0.3s ease;
+}
+.navbar-user:hover {
+  background: rgba(51, 65, 85, 0.7);
+}
+.user-avatar {
+  background: var(--space-dark);
+  border-radius: 50%;
+  padding: 5px;
+  display: flex;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+.navbar-user-icon { color: var(--text-dim); }
+.navbar-user-name { font-weight: 600; color: var(--text-bright); }
+.navbar-logout {
+  background: none; border: none;
+  color: var(--text-dim);
+  cursor: pointer; padding: 6px; border-radius: 50%;
+  display: flex; transition: all 0.3s ease;
+}
+.navbar-logout:hover {
+  color: var(--aurora-pink);
+  background: rgba(236, 72, 153, 0.1);
+}
+
+
+/* --- Power-Up Sign Up Button --- */
+.navbar-signup {
+  padding: 10px 22px;
+  font-size: 15px;
+  font-weight: 700;
+  background: linear-gradient(110deg, var(--aurora-pink), var(--aurora-purple));
+  background-size: 200% 200%;
+  color: white;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+.navbar-signup .signup-text {
+  position: relative;
+  z-index: 2;
+}
+.navbar-signup:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px var(--aurora-purple), 0 0 30px var(--aurora-pink);
+  animation: aurora-pan 4s ease infinite;
+}
+/* Border draw effect */
+.navbar-signup .signup-glow {
+  position: absolute;
+  top: -2px; left: -2px; right: -2px; bottom: -2px;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+.navbar-signup:hover .signup-glow {
+  opacity: 1;
+}
+.navbar-signup .signup-glow svg {
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  fill: none;
+  stroke: url(#signup-gradient);
+  stroke-width: 2;
+  stroke-dasharray: 1000;
+  animation: draw-border 0.8s ease-out;
+}
+
+
+/* --- Mobile --- */
+.navbar-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-bright);
+  cursor: pointer;
+  z-index: 1001;
+}
+.navbar-menu.mobile {
+  position: absolute;
+  top: 70px;
+  left: 0; right: 0;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(10px);
+  flex-direction: column;
+  padding: 16px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  z-index: 2;
+}
+
+
+/* --- Responsive Breakpoint --- */
+@media (max-width: 992px) {
+  .navbar-toggle { display: flex; z-index: 2; }
+  .navbar-menu.desktop { display: none; }
+}

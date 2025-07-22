@@ -1,0 +1,188 @@
+/* --- ROOT VARIABLES & KEYFRAMES --- */
+:root {
+  --space-dark: #0f172a;
+  --aurora-pink: #ec4899;
+  --aurora-purple: #a855f7;
+  --aurora-cyan: #22d3ee;
+  --aurora-red: #ff375f;   /* Neon Red */
+  --aurora-green: #32ff7e; /* Neon Green */
+  --text-bright: #f1f5f9;
+  --text-dim: #94a3b8;
+}
+
+@keyframes aurora-pan {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* --- Base Button Style --- */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  font-family: inherit;
+  position: relative;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent; /* For better mobile experience */
+}
+
+.button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.4); /* Themed cyan focus ring */
+}
+
+/* --- Variants --- */
+
+/* Primary Button (Main Showstopper) */
+.button-primary {
+  background: linear-gradient(110deg, var(--aurora-pink), var(--aurora-purple));
+  background-size: 200% 200%;
+  color: white;
+  border: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.button-primary:hover:not(.button-disabled):not(.button-loading) {
+  box-shadow: 0 0 20px var(--aurora-purple), 0 0 30px var(--aurora-pink);
+  transform: translateY(-2px);
+  animation: aurora-pan 4s ease infinite;
+}
+
+/* Secondary Button (Subdued) */
+.button-secondary {
+  background: rgba(30, 41, 59, 0.6);
+  color: var(--text-dim);
+  border-color: rgba(148, 163, 184, 0.2);
+}
+
+.button-secondary:hover:not(.button-disabled):not(.button-loading) {
+  background: rgba(51, 65, 85, 0.8);
+  border-color: var(--aurora-cyan);
+  color: var(--text-bright);
+}
+
+/* Outline Button */
+.button-outline {
+  background: transparent;
+  color: var(--aurora-cyan);
+  border-color: var(--aurora-cyan);
+}
+
+.button-outline:hover:not(.button-disabled):not(.button-loading) {
+  background: rgba(34, 211, 238, 0.1);
+  color: white;
+  text-shadow: 0 0 8px var(--aurora-cyan);
+  box-shadow: 0 0 15px rgba(34, 211, 238, 0.2);
+}
+
+/* Danger Button */
+.button-danger {
+  background: var(--aurora-red);
+  color: white;
+  border: none;
+  box-shadow: 0 0 15px rgba(255, 55, 95, 0.4);
+}
+
+.button-danger:hover:not(.button-disabled):not(.button-loading) {
+  background: #ff1c4b; /* Slightly brighter red */
+  box-shadow: 0 0 25px rgba(255, 55, 95, 0.6);
+  transform: translateY(-2px);
+}
+
+/* Success Button */
+.button-success {
+  background: var(--aurora-green);
+  color: var(--space-dark);
+  border: none;
+  box-shadow: 0 0 15px rgba(50, 255, 126, 0.4);
+}
+
+.button-success:hover:not(.button-disabled):not(.button-loading) {
+  background: #4bff8f; /* Slightly brighter green */
+  box-shadow: 0 0 25px rgba(50, 255, 126, 0.6);
+  transform: translateY(-2px);
+}
+
+/* --- Sizes --- */
+.button-small {
+  padding: 8px 16px;
+  font-size: 14px;
+}
+
+.button-medium {
+  padding: 12px 24px;
+  font-size: 16px;
+}
+
+.button-large {
+  padding: 16px 32px;
+  font-size: 18px;
+}
+
+/* --- States --- */
+.button-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.button-loading {
+  cursor: wait;
+  pointer-events: none;
+  color: transparent !important; /* Hide button text when loading */
+}
+
+.button-spinner {
+  position: absolute; /* Center spinner inside the button */
+  width: 20px;
+  height: 20px;
+  border: 2px solid;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  /* Default spinner color for primary, danger, etc. */
+  border-color: rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+}
+
+/* Spinner color for buttons with dark text */
+.button-success .button-spinner {
+  border-color: rgba(15, 23, 42, 0.3);
+  border-top-color: var(--space-dark);
+}
+
+/* Spinner color for outline button */
+.button-outline .button-spinner {
+  border-color: rgba(34, 211, 238, 0.3);
+  border-top-color: var(--aurora-cyan);
+}
+
+/* --- Full width --- */
+.button-full {
+  width: 100%;
+}
+
+/* --- Icon buttons --- */
+.button-icon {
+  padding: 10px; /* Consistent padding for circle */
+  border-radius: 50%;
+}
+
+.button-icon.button-small {
+  padding: 8px;
+}
+
+.button-icon.button-large {
+  padding: 12px;
+}
